@@ -9,7 +9,7 @@ func Run(input string) (string, error) {
 
 	chars := []rune(input)
 	for i, c := range chars {
-		next := (i + 1) % len(chars)
+		next := (i + len(chars) / 2) % len(chars)
 
 		if c == chars[next] {
 			sum += int(c - '0')
