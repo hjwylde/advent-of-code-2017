@@ -13,6 +13,7 @@ const unknownArgumentTemplate = "Unknown argument: %s\n"
 
 var days = map[string]solver.Solver{
 	"1": solver.Day1,
+	"2": solver.Day2,
 }
 
 func main() {
@@ -37,7 +38,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	input := strings.TrimSuffix(string(data), "\n")
+	input := strings.Split(strings.TrimSpace(string(data)), "\n")
 
 	output, err := day.Run(input)
 	if err != nil {

@@ -1,5 +1,5 @@
 package solver
 
 type Solver struct {
-	Run func(string) (string, error)
+	Run func([]string) (string, error)
 }
