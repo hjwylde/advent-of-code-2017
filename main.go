@@ -15,6 +15,7 @@ var days = map[string]solver.Solver{
 	"1": solver.Day1,
 	"2": solver.Day2,
 	"3": solver.Day3,
+	"4": solver.Day4,
 }
 
 func main() {
