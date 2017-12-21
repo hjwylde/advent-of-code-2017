@@ -12,6 +12,8 @@ var Day8 = Solver{
 
 func runDay8(input []string) (string, error) {
 	registers := make(map[string]int)
+
+	max := 0
 	for _, instruction := range input {
 		tokens := strings.Fields(instruction)
 
@@ -32,13 +34,10 @@ func runDay8(input []string) (string, error) {
 			value3 := evalExpression(register1, op1, value1, registers)
 
 			registers[register1] = value3
-		}
-	}
 
-	max := 0
-	for _, value := range registers {
-		if value > max {
-			max = value
+			if value3 > max {
+				max = value3
+			}
 		}
 	}
 
