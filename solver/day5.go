@@ -26,7 +26,11 @@ func runDay5(input []string) (string, error) {
 		count++
 
 		instruction = instructions[i]
-		instructions[i]++
+		if instruction >= 3 {
+			instructions[i]--
+		} else {
+			instructions[i]++
+		}
 	}
 
 	output := fmt.Sprintf("%d", count)
