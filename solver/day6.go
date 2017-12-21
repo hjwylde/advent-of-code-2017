@@ -23,18 +23,16 @@ func runDay6(input []string) (string, error) {
 		banks[i] = value
 	}
 
-	fmt.Printf("%v\n", banks)
+	memory := make(map[string]int)
 
-	memory := make(map[string]bool)
-
-	count := 0
+	cycle := 0
 	for {
 		key := generateBanksKey(banks)
 		if _, ok := memory[key]; ok {
 			break
 		}
 
-		memory[key] = true
+		memory[key] = cycle
 
 		largestBankIndex := findLargestBankIndex(banks)
 
@@ -45,8 +43,16 @@ func runDay6(input []string) (string, error) {
 			banks[i%len(banks)]++
 		}
 
-		count++
+		cycle++
 	}
+
+	key := generateBanksKey(banks)
+	value, ok := memory[key]
+	if !ok {
+		panic("Uh oh")
+	}
+
+	count := cycle - value
 
 	output := fmt.Sprintf("%d", count)
 
