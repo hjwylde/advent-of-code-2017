@@ -2,6 +2,7 @@ package solver
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -28,11 +29,15 @@ func isValidPassphrase(input string) bool {
 
 	phrases := strings.Split(input, " ")
 	for _, phrase := range phrases {
-		if _, ok := memory[phrase]; ok {
+		chars := strings.Split(phrase, "")
+		sort.Strings(chars)
+
+		key := strings.Join(chars, "")
+		if _, ok := memory[key]; ok {
 			return false
 		}
 
-		memory[phrase] = true
+		memory[key] = true
 	}
 
 	return true
