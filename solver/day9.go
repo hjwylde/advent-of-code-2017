@@ -22,7 +22,7 @@ func runDay9(input []string) (string, error) {
 	s := newScanner(input[0])
 	group := parseGroup(&s)
 
-	score := calculateScore(group, 1)
+	score := calculateRubbish(group)
 
 	output := fmt.Sprintf("%d", score)
 
@@ -59,7 +59,6 @@ func newGroup(characters []rune, groups []group) group {
 }
 
 func parseGroup(s *scanner) group {
-	var characters []rune
 	var groups []group
 
 	s.next()
@@ -70,33 +69,40 @@ func parseGroup(s *scanner) group {
 
 			groups = append(groups, group)
 		case '<':
-			parseRubbish(s)
+			rubbish := parseRubbish(s)
+
+			groups = append(groups, rubbish)
 		case ',':
 			s.next()
 		default:
-			characters = append(characters, c)
-
-			s.next()
+			panic("Uh oh")
 		}
 	}
 	s.next()
 
-	return newGroup(characters, groups)
+	return newGroup([]rune{}, groups)
 }
 
-func parseRubbish(s *scanner) {
+func parseRubbish(s *scanner) group {
+	var characters []rune
+
+	s.next()
 	for c := s.next(); c != '>'; c = s.next() {
 		if c == '!' {
 			s.next()
+		} else {
+			characters = append(characters, c)
 		}
 	}
+
+	return newGroup(characters, []group{})
 }
 
-func calculateScore(g group, level int) int {
-	totalScore := level
+func calculateRubbish(g group) int {
+	rubbish := len(g.characters)
 	for _, subgroup := range g.groups {
-		totalScore += calculateScore(subgroup, level+1)
+		rubbish += calculateRubbish(subgroup)
 	}
 
-	return totalScore
+	return rubbish
 }
